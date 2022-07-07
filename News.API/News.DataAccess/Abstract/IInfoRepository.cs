@@ -13,5 +13,7 @@ namespace News.DataAccess.Abstract
         Task<Info> GetByIdWithAllDetails(int id);
         Task<List<Info>> GetLastTenByCategory(int categoryId);
         Task<List<Info>> GetByCategory(int categoryId);
+        Task<List<Info>> GetLastNewsById(int id);
+
     }
 }

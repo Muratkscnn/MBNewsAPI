@@ -15,12 +15,14 @@ namespace News.API.Controllers
     {
         private UserManager<AppUser> _userManager;
         private SignInManager<AppUser> _signInManager;
+        private RoleManager<AppRole> _roleManager;
         private IJWTAuthenticationService _jWT;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJWTAuthenticationService jWT)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<AppRole> roleManager, IJWTAuthenticationService jWT)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _jWT = jWT;
         }
 
@@ -69,6 +71,13 @@ namespace News.API.Controllers
          
             return Ok(user);
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddRole(AppRole entity)
+        {
+            await _roleManager.CreateAsync(entity);
+            return Ok();
         }
     }
 }

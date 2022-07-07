@@ -53,6 +53,11 @@ namespace News.Business.Concrete
             return await _unitOfWork.Infos.GetFourNewsWithCategory();
         }
 
+        public async Task<List<Info>> GetLastNewsById(int id)
+        {
+            return await _unitOfWork.Infos.GetLastNewsById(id);
+        }
+
         public async Task<List<Info>> GetLastTenByCategory(int categoryId)
         {
             return await _unitOfWork.Infos.GetLastTenByCategory(categoryId);

@@ -30,7 +30,7 @@ namespace News.DataAccess.EntityFramework
 
         public async Task<Info> GetByIdWithAllDetails(int id)
         {
-            var info = await MBContext.Infos.Include(x => x.Category).Include(x => x.Comments).Where(x => x.InfoId == id).FirstOrDefaultAsync();
+            var info = await MBContext.Infos.Include(x => x.Category).Include(x => x.Comments).ThenInclude(y=>y.User).Where(x => x.InfoId == id).FirstOrDefaultAsync();
             return info;
         }
 
@@ -44,6 +44,12 @@ namespace News.DataAccess.EntityFramework
         {
             var infosbyCategory = await MBContext.Infos.Include(x => x.Category).OrderByDescending(x => x.InfoId).Where(x => x.CategoryId == categoryId).ToListAsync();
             return infosbyCategory;
+        }
+
+        public async Task<List<Info>> GetLastNewsById(int id)
+        {
+            var infos = await MBContext.Infos.OrderByDescending(x => x.InfoId).Take(id).ToListAsync();
+            return infos;
         }
     }
 }

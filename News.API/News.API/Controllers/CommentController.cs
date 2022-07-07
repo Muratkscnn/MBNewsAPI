@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using News.API.Models;
 using News.Business.Abstract;
@@ -11,15 +12,20 @@ namespace News.API.Controllers
     public class CommentController : ControllerBase
     {
         private ICommentService _commentService;
+        private UserManager<AppUser> _userManager;
 
-        public CommentController(ICommentService commentService)
+        public CommentController(ICommentService commentService, UserManager<AppUser> userManager)
         {
             _commentService = commentService;
+            _userManager = userManager;
         }
+
         [HttpPost]
         public async Task<IActionResult> CommentAdd(CommentAddModel entity)
         {
-            Comment model = new Comment() { InfoId = entity.InfoId, UserName = entity.UserName, Content = entity.Content };
+            var userid = User.Claims.FirstOrDefault(x => x.Type == "id").Value;
+            var user = await _userManager.FindByIdAsync(userid);
+            Comment model = new Comment() { InfoId = entity.InfoId, AppUserId = user.Id, Content = entity.Content };
             var value = await _commentService.CreateAsync(model);
             return Ok(entity);
         }

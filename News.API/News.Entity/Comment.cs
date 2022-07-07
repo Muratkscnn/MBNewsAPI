@@ -9,7 +9,8 @@ namespace News.Entity
     public class Comment
     {
         public int CommentId { get; set; }
-        public string UserName { get; set; }
+        public int AppUserId { get; set; }
+        public AppUser User { get; set; }
         public string Content { get; set; }
         public int InfoId { get; set; }
         public Info Info { get; set; }

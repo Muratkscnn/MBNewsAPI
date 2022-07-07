@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using News.API.Models;
 using News.Business.Abstract;
 using News.DataAccess.Abstract;
 using News.Entity;
+using System.Net;
 
 namespace News.API.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class InfoController : ControllerBase
@@ -19,19 +23,13 @@ namespace News.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetInfos()
+        public async Task<IActionResult> GetNews()
         {
             var infos = await _infoService.GetList();
             return Ok(infos);
         }
-        [HttpGet]
-        public async Task<IActionResult> GetLastFourNews()
-        {
-            var infos = await _infoService.GetFourNewsWithCategory();
-            return Ok(infos);
-        }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdWithAllDetails(int id)
+        public async Task<IActionResult> GetNewsByIdWithAllDetails(int id)
         {
             var info = await _infoService.GetByIdWithAllDetails(id);
             return Ok(info);
@@ -49,6 +47,21 @@ namespace News.API.Controllers
             await _infoService.Add(model);
             return Ok();
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> NewsUpdate(int id, NewsAddModel entity)
+        {
+            var news=await _infoService.GetById(id);
+            if (news==null)
+            {
+                return BadRequest($"{id} no'lu haber bulunamadı");
+            }
+            news.Content = entity.NewsContent;
+            news.ImageUrl = entity.ImageUrl;
+            news.NewsName = entity.NewsName;
+            news.CategoryId = entity.CategoryId;
+            await _infoService.Update(news);
+            return Ok(news);
+        }
         [HttpDelete("{id}")]
         public async Task<IActionResult> NewsDelete(int id)
         {
@@ -57,17 +70,10 @@ namespace News.API.Controllers
             return Ok(model);
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetInfoWithCategoryLastTenNews(int id)
+        public async Task<IActionResult> GetLastNewsById(int id)
         {
-            var values = await _infoService.GetLastTenByCategory(id);
-            return Ok(values);
+            var news=await _infoService.GetLastNewsById(id);
+            return Ok(news);
         }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetAllInfoWithCategory(int id)
-        {
-            var values = await _infoService.GetLastTenByCategory(id);
-            return Ok(values);
-        }
-
     }
 }
