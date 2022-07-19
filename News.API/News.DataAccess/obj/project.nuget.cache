@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jO60qplrnOl2wHXM+1ylAwdzVhNDFE8FXFfUD+dzU9qjiCaZehSWZrQTk19GBPPQRjXOJ0MyVXq+N3ONCGrhxg==",
+  "dgSpecHash": "Xs2t8nSbRASkZpJkTDzXorZwhK3EjErKKJ/6pkHFgpzVPfDTUSkdy0xH58MlM1PAu+DxNyBHaWrrzlrpqEuVWA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\MEGACODE\\Desktop\\MBNewsAPI\\News.API\\News.DataAccess\\News.DataAccess.csproj",
+  "projectFilePath": "C:\\Users\\MEGACODE\\Documents\\GitHub\\MBNewsAPI\\News.API\\News.DataAccess\\News.DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MEGACODE\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\MEGACODE\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",

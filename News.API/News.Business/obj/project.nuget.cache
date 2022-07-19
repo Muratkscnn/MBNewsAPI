@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "V+KGox5HD7QNrsWMeuLXI9K+A7nf3oDtebCD9devOGmDFWDLciQuSeMFP8dMSIRyTvFBhzBb+CMHObrkoVojxg==",
+  "dgSpecHash": "RbPptUinJdYHg8NuUbe2F/5OHjMK5dp8xF0sg/4oIDQhX1S2fKQv2dmQy/PcNrZblO+zyX9QUZTGC91YX3UgCg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\MEGACODE\\Desktop\\MBNewsAPI\\News.API\\News.Business\\News.Business.csproj",
+  "projectFilePath": "C:\\Users\\MEGACODE\\Documents\\GitHub\\MBNewsAPI\\News.API\\News.Business\\News.Business.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MEGACODE\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\MEGACODE\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

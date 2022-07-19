@@ -21,6 +21,8 @@ namespace News.API.Controllers
         {
             _infoService = infoService;
         }
+
+
         [HttpGet]
         public async Task<IActionResult> GetNews()
         {
