@@ -1,4 +1,6 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using News.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,9 +16,10 @@ namespace News.API.JWT
             _tokenKey = tokenKey;
         }
 
-        public string Authenticate(string userId)
+        public string Authenticate(string userId,string role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
+            
             //token will be user specific
             //token management
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -24,7 +27,8 @@ namespace News.API.JWT
                 Subject = new ClaimsIdentity(
                     new Claim[]
                     {
-                        new Claim("id",userId)
+                        new Claim("id",userId),
+                        new Claim("role",role)
                     }),
                 //open for 1 hour according to international time(for token)
                 Expires = DateTime.Now.AddHours(1),

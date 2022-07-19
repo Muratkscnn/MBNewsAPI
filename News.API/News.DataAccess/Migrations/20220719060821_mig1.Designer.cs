@@ -11,7 +11,7 @@ using News.DataAccess.Concreate;
 namespace News.DataAccess.Migrations
 {
     [DbContext(typeof(MBContext))]
-    [Migration("20220630115650_mig1")]
+    [Migration("20220719060821_mig1")]
     partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -270,6 +270,9 @@ namespace News.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -277,45 +280,13 @@ namespace News.DataAccess.Migrations
                     b.Property<int>("InfoId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("CommentId");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("InfoId");
 
                     b.ToTable("Comments");
-
-                    b.HasData(
-                        new
-                        {
-                            CommentId = 1,
-                            Content = "İnanılmaz bir haber",
-                            InfoId = 1,
-                            UserName = "Murat Kuşcan"
-                        },
-                        new
-                        {
-                            CommentId = 2,
-                            Content = "Umarım Erkenden bulunur..",
-                            InfoId = 1,
-                            UserName = "Berke Dursunoğlu"
-                        },
-                        new
-                        {
-                            CommentId = 3,
-                            Content = "Allah ailesine sabır versin..",
-                            InfoId = 1,
-                            UserName = "Onurcan Cengiz"
-                        },
-                        new
-                        {
-                            CommentId = 4,
-                            Content = "Umarım kaçırılıp böbreklerini satmamışlardır..",
-                            InfoId = 1,
-                            UserName = "Ozan Çepni"
-                        });
                 });
 
             modelBuilder.Entity("News.Entity.Info", b =>
@@ -521,6 +492,12 @@ namespace News.DataAccess.Migrations
 
             modelBuilder.Entity("News.Entity.Comment", b =>
                 {
+                    b.HasOne("News.Entity.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("News.Entity.Info", "Info")
                         .WithMany("Comments")
                         .HasForeignKey("InfoId")
@@ -528,6 +505,8 @@ namespace News.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Info");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("News.Entity.Info", b =>

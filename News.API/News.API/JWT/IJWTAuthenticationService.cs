@@ -2,6 +2,6 @@
 {
     public interface IJWTAuthenticationService
     {
-        public string Authenticate(string userId);
+        public string Authenticate(string userId,string role);
     }
 }

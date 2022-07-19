@@ -15,10 +15,8 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MBContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("SqLiteConnection")));
@@ -36,9 +34,7 @@ builder.Services.AddAuthentication(configureOptions =>
     configureOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
 }).AddJwtBearer(x => {
-
     //No metadata needed when sending http packet
-
     x.RequireHttpsMetadata = false;
     x.SaveToken = true;
     x.TokenValidationParameters = new TokenValidationParameters

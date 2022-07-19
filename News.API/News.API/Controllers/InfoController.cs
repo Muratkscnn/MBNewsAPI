@@ -10,7 +10,7 @@ using System.Net;
 
 namespace News.API.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class InfoController : ControllerBase
@@ -21,7 +21,6 @@ namespace News.API.Controllers
         {
             _infoService = infoService;
         }
-
         [HttpGet]
         public async Task<IActionResult> GetNews()
         {
@@ -34,6 +33,7 @@ namespace News.API.Controllers
             var info = await _infoService.GetByIdWithAllDetails(id);
             return Ok(info);
         }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> NewsAdd(NewsAddModel entity)
         {
@@ -47,6 +47,7 @@ namespace News.API.Controllers
             await _infoService.Add(model);
             return Ok();
         }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> NewsUpdate(int id, NewsAddModel entity)
         {
@@ -62,6 +63,7 @@ namespace News.API.Controllers
             await _infoService.Update(news);
             return Ok(news);
         }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> NewsDelete(int id)
         {

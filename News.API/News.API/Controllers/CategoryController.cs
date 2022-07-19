@@ -31,6 +31,7 @@ namespace News.API.Controllers
             var values = await _categoryService.GetCategoryWithNews(id);
             return Ok(values);
         }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> CategoryUpdate(int id,CategoryAddModel entity)
         {
@@ -43,6 +44,7 @@ namespace News.API.Controllers
             await _categoryService.Update(model);
             return Ok(model);
         }
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> CategoryDelete(int id)
         {

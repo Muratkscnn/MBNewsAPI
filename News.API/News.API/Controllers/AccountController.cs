@@ -29,7 +29,6 @@ namespace News.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)
         {
-          
             var user = await _userManager.FindByNameAsync(model.UserName);
             if (user == null)
             {
@@ -38,7 +37,8 @@ namespace News.API.Controllers
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, true, false);
             if (result.Succeeded)
             {
-                var userToken = _jWT.Authenticate(user.Id.ToString());
+                var role = await _userManager.GetRolesAsync(user);
+                var userToken = _jWT.Authenticate(user.Id.ToString(),role.FirstOrDefault());
                 return Ok(userToken);
             }
             return BadRequest();
@@ -46,7 +46,6 @@ namespace News.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-        
             var appUser = new AppUser()
             {
                 FirstName = model.FirstName,
@@ -58,7 +57,9 @@ namespace News.API.Controllers
             var result = await _userManager.CreateAsync(appUser, model.Password);
             if (result.Succeeded)
             {
-                return Ok("Giriş Başarılı");
+                var user = await _userManager.FindByNameAsync(appUser.UserName);
+                await _userManager.AddToRoleAsync(user, "Member");
+                return Ok("Kayıt Başarılı");
             }
             return BadRequest();
         }
@@ -68,11 +69,9 @@ namespace News.API.Controllers
         {
             var userid = User.Claims.FirstOrDefault(x => x.Type == "id").Value;
             var user = await _userManager.FindByIdAsync(userid);
-         
             return Ok(user);
-
         }
-
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,Roles ="Admin")]
         [HttpPost]
         public async Task<IActionResult> AddRole(AppRole entity)
         {
